@@ -1,7 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using OSRSHelper.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<OSRSDbContext>(options =>
+	options.UseSqlServer(builder.Configuration.GetConnectionString("OSRSHelper")));
 
 var app = builder.Build();
 
