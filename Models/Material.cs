@@ -4,7 +4,7 @@
 	{
         public int MaterialId { get; set; }
 		public required string MaterialName { get; set; }
-		public int MaterialValue { get; set; }
+		public required int MaterialValue { get; set; }
 
     }
 }

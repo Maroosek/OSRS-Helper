@@ -8,10 +8,10 @@ namespace OSRSHelper.Data
         public OSRSDbContext(DbContextOptions<OSRSDbContext> options) : base(options)
         {
         }
-
         public DbSet<FarmType> FarmTypes { get; set; }
         public DbSet<FarmSpot> FarmSpots { get; set; }
         public DbSet<Material> Materials { get; set; }
         public DbSet<Product> Products { get; set; }
+
     }
 }

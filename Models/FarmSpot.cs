@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace OSRSHelper.Models
+﻿namespace OSRSHelper.Models
 {
 	public class FarmSpot
 	{
-		[Key]
-        public int SpotId { get; set; }
+        public int FarmSpotId { get; set; }
 		public required string SpotName { get; set; }
 		public required int Time { get; set; }
+		public required FarmType FarmType { get; set; }
+		public int FarmTypeId { get; set; }
     }
 }
