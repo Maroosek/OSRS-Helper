@@ -1,0 +1,38 @@
+﻿@model IEnumerable<OSRSHelper.Models.FarmSpot>
+@{
+	ViewData["Title"] = "FarmSpot";
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Farm Spot</h1>
+<p>
+	<a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>@Html.DisplayNameFor(model => model.SpotName)</th>
+			<th>@Html.DisplayNameFor(model => model.Time)</th>
+			<th>@Html.DisplayNameFor(model => model.FarmType)</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+		<tr>
+			<td>@Html.DisplayFor(modelItem => item.SpotName)</td>
+			<td>@Html.DisplayFor(modelItem => item.Time)</td>
+			<td>@Html.DisplayFor(modelItem => item.FarmType)</td>
+			<td>
+				<a asp-action="Edit" asp-route-id="@item.FarmSpotId">Edit</a> |
+				@* <a asp-action="Details" asp-route-id="@item.FarmSpotId">Details</a> | *@
+				<a asp-action="Delete" asp-route-id="@item.FarmSpotId">Delete</a>
+			</td>
+		</tr>
+		}
+	</tbody>
+</table>
