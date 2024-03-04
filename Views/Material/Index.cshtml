@@ -1,0 +1,31 @@
+﻿@model IEnumerable<OSRSHelper.Models.Material>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Materials</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th></th>
+			<th>@Html.DisplayNameFor(model => model.MaterialName)</th>
+			<th>@Html.DisplayNameFor(model => model.MaterialValue)</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.MaterialId">Select</a>
+				</td>
+				<td>@Html.DisplayFor(modelItem => item.MaterialName)</td>
+				<td>@Html.DisplayFor(modelItem => item.MaterialValue)</td>
+				
+			</tr>
+		}
+	</tbody>
+</table>
