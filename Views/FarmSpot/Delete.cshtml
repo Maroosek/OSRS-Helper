@@ -1,22 +1,21 @@
 ﻿@using OSRSHelper.Models
-@model OSRSHelper.Models.FarmSpot 
+@model OSRSHelper.Models.FarmSpot
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@* @{
-    ViewData["Title"] = "FarmType";
-} *@
-
+@{
+}
 
 <h1>Farm Spot</h1>
 <form method="post">
     <div class="create">
         <label class="form-label">Name</label>
-        <input class="form-control" type="text" asp-for="SpotName" />
+        <input disabled class="form-control" type="text" asp-for="SpotName" />
         <label class="form-label">Time</label>
-        <input class="form-control" type="number" asp-for="Time"/>
+        <input disabled class="form-control" type="number" asp-for="Time" />
         <label class="form-label">Farm Type</label>
+        <input disabled class="form-control" type="text" asp-for="FarmType" />
         <br />
-        <button type="submit" class="btn btn-primary">Add</button>
+        <button type="button" class="btn btn-danger form-control">Delete</button>
     </div>
 </form>

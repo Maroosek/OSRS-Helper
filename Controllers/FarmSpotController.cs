@@ -22,11 +22,35 @@ namespace OSRSHelper.Controllers
 			return View(farmSpots);
 		}
 
-
 		[HttpGet]
 		public IActionResult Create()
 		{
 			return View();
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> Create(FarmSpot model)
+		{
+			var farmSpot = new FarmSpot
+			{
+				SpotName = model.SpotName,
+				Time = model.Time,
+				FarmType = model.FarmType
+			};
+
+            await DbContext.FarmSpots.AddAsync(farmSpot);
+			await DbContext.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+		[HttpPost]
+		public async Task<IActionResult> Delete(int id)
+		{
+            var farmSpot = await DbContext.FarmSpots.FindAsync(id);
+            DbContext.FarmSpots.Remove(farmSpot);
+            await DbContext.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
 	}
 }
