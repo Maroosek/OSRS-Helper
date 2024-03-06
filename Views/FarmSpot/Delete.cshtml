@@ -6,9 +6,9 @@
 @{
 }
 
-<h1>Farm Spot</h1>
-<form method="post">
-    <div class="create">
+<h1>Delete Farm Spot</h1>
+
+    <div class="delete">
         <label class="form-label">Name</label>
         <input disabled class="form-control" type="text" asp-for="SpotName" />
         <label class="form-label">Time</label>
@@ -16,6 +16,8 @@
         <label class="form-label">Farm Type</label>
         <input disabled class="form-control" type="text" asp-for="FarmType" />
         <br />
-        <button type="button" class="btn btn-danger form-control">Delete</button>
+        
     </div>
+<form method="post">
+    <button type="button" class="btn btn-danger form-control">Delete</button>
 </form>
