@@ -1,0 +1,39 @@
+﻿@model IEnumerable<OSRSHelper.Models.Product>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Products</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>@Html.DisplayNameFor(model => model.ProductName)</th>
+			<th>@Html.DisplayNameFor(model => model.ProductValue)</th>
+			<th>@Html.DisplayNameFor(model => model.ProductExperience)</th>
+			<th>@Html.DisplayNameFor(model => model.FarmType.FarmName)</th>
+			<th>@Html.DisplayNameFor(model => model.Material.MaterialName)</th>
+			<th>@Html.DisplayNameFor(model => model.MaterialSecond.MaterialName)</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+				<td>@Html.DisplayFor(modelItem => item.ProductValue)</td>
+				<td>@Html.DisplayFor(modelItem => item.ProductExperience)</td>
+				<td>@Html.DisplayFor(modelItem => item.FarmTypeId)</td>
+				<td>@Html.DisplayFor(modelItem => item.MaterialId)</td>
+				<td>@Html.DisplayFor(modelItem => item.MaterialSecondId)</td>
+@* 				<td>
+					<a asp-action="Edit" asp-route-id="@item.FarmSpotId">Edit</a> |
+					<a asp-action="Delete" asp-route-id="@item.FarmSpotId">Delete</a>
+				</td> *@
+			</tr>
+		}
+	</tbody>
+</table>

@@ -17,7 +17,6 @@ namespace OSRSHelper.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var farmSpots = await DbContext.FarmSpots.ToListAsync();
-			//IEnumerable<FarmSpot> farmSpots = DbContext.FarmSpots.ToList();
 
 			return View(farmSpots);
 		}

@@ -10,7 +10,6 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th></th>
 			<th>@Html.DisplayNameFor(model => model.MaterialName)</th>
 			<th>@Html.DisplayNameFor(model => model.MaterialValue)</th>
 		</tr>
@@ -20,11 +19,12 @@
 		{
 			<tr>
 				<td>
-					<a asp-action="Edit" asp-route-id="@item.MaterialId">Select</a>
+					<a class="nav-link text-dark" asp-controller="Product" asp-action="Index">@Html.DisplayFor(modelItem => item.MaterialName)</a>
 				</td>
-				<td>@Html.DisplayFor(modelItem => item.MaterialName)</td>
-				<td>@Html.DisplayFor(modelItem => item.MaterialValue)</td>
-				
+
+				<td>
+					@Html.DisplayFor(modelItem => item.MaterialValue)
+				</td>
 			</tr>
 		}
 	</tbody>
