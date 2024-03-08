@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OSRSHelper.Data;
+using OSRSHelper.Models;
 
 namespace OSRSHelper.Controllers
 {
@@ -12,14 +13,21 @@ namespace OSRSHelper.Controllers
 		{
 			DbContext = dbContext;
 		}
-		public async Task<IActionResult> Index(string MaterialName)
+		public async Task<IActionResult> Index(int MaterialId)
 		{
             var products = await DbContext.Products.ToListAsync();
 
-            if (!string.IsNullOrEmpty(MaterialName))
+			if (MaterialId != 0)
+			{
+				//products = products.Where(p => p.MaterialId == MaterialId).ToList();
+
+				return View();
+			}
+
+            /*if (!string.IsNullOrEmpty(MaterialName))
 			{ 
 				products = products.Where(p => p.ProductName.Contains(MaterialName)).ToList();
-			}
+			}*/
             
             return View(products);
 		}

@@ -12,7 +12,7 @@
 		<tr>
 			<th>@Html.DisplayNameFor(model => model.SpotName)</th>
 			<th>@Html.DisplayNameFor(model => model.Time)</th>
-			<th>@Html.DisplayNameFor(model => model.FarmType)</th>
+			<th>@Html.DisplayNameFor(model => model.FarmType.FarmName)</th>
 			<th>Actions</th>
 		</tr>
 	</thead>
@@ -22,10 +22,9 @@
 		<tr>
 			<td>@Html.DisplayFor(modelItem => item.SpotName)</td>
 			<td>@Html.DisplayFor(modelItem => item.Time)</td>
-			<td>@Html.DisplayFor(modelItem => item.FarmType)</td>
+			<td>@Html.DisplayFor(modelItem => item.FarmTypeId)</td>
 			<td>
 				<a asp-action="Edit" asp-route-id="@item.FarmSpotId">Edit</a> |
-				@* <a asp-action="Details" asp-route-id="@item.FarmSpotId">Details</a> | *@
 				<a asp-action="Delete" asp-route-id="@item.FarmSpotId">Delete</a>
 			</td>
 		</tr>

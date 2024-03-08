@@ -29,6 +29,7 @@
 				<td>@Html.DisplayFor(modelItem => item.FarmTypeId)</td>
 				<td>@Html.DisplayFor(modelItem => item.MaterialId)</td>
 				<td>@Html.DisplayFor(modelItem => item.MaterialSecondId)</td>
+				<a asp-action="Details" asp-route-id="@item.ProductId">Edit</a>
 @* 				<td>
 					<a asp-action="Edit" asp-route-id="@item.FarmSpotId">Edit</a> |
 					<a asp-action="Delete" asp-route-id="@item.FarmSpotId">Delete</a>
