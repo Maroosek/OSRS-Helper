@@ -10,30 +10,50 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>@Html.DisplayNameFor(model => model.ProductName)</th>
-			<th>@Html.DisplayNameFor(model => model.ProductValue)</th>
-			<th>@Html.DisplayNameFor(model => model.ProductExperience)</th>
-			<th>@Html.DisplayNameFor(model => model.FarmType.FarmName)</th>
-			<th>@Html.DisplayNameFor(model => model.Material.MaterialName)</th>
-			<th>@Html.DisplayNameFor(model => model.MaterialSecond.MaterialName)</th>
-			<th>Actions</th>
+			<th>
+				@Html.DisplayNameFor(model => model.ProductName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.ProductValue)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.ProductExperience)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.FarmType.FarmName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Material.MaterialName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.MaterialSecond.MaterialName)
+			</th>
+
 		</tr>
 	</thead>
 	<tbody>
 		@foreach (var item in Model)
 		{
 			<tr>
-				<td>@Html.DisplayFor(modelItem => item.ProductName)</td>
-				<td>@Html.DisplayFor(modelItem => item.ProductValue)</td>
-				<td>@Html.DisplayFor(modelItem => item.ProductExperience)</td>
-				<td>@Html.DisplayFor(modelItem => item.FarmTypeId)</td>
-				<td>@Html.DisplayFor(modelItem => item.MaterialId)</td>
-				<td>@Html.DisplayFor(modelItem => item.MaterialSecondId)</td>
-				<a asp-action="Details" asp-route-id="@item.ProductId">Edit</a>
-@* 				<td>
-					<a asp-action="Edit" asp-route-id="@item.FarmSpotId">Edit</a> |
-					<a asp-action="Delete" asp-route-id="@item.FarmSpotId">Delete</a>
-				</td> *@
+				<td>
+					<a class="nav-link text-dark" asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId">@Html.DisplayFor(modelItem => item.ProductName)</a>
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.ProductValue)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.ProductExperience)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.FarmTypeId)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.MaterialId)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.MaterialSecondId)
+				</td>
+
 			</tr>
 		}
 	</tbody>

@@ -10,8 +10,12 @@
 <table class="table">
 	<thead>
 		<tr>
-			<th>@Html.DisplayNameFor(model => model.MaterialName)</th>
-			<th>@Html.DisplayNameFor(model => model.MaterialValue)</th>
+			<th>
+				@Html.DisplayNameFor(model => model.MaterialName)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.MaterialValue)
+			</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -19,9 +23,8 @@
 		{
 			<tr>
 				<td>
-					<a class="nav-link text-dark" asp-controller="Product" asp-action="Index">@Html.DisplayFor(modelItem => item.MaterialName)</a>
+					<a class="nav-link text-dark" asp-controller="Product" asp-action="Index" asp-route-id="@item.MaterialId">@Html.DisplayFor(modelItem => item.MaterialName)</a>
 				</td>
-
 				<td>
 					@Html.DisplayFor(modelItem => item.MaterialValue)
 				</td>

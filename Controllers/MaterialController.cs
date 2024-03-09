@@ -6,15 +6,15 @@ namespace OSRSHelper.Controllers
 {
 	public class MaterialController : Controller
 	{
-		private readonly OSRSDbContext DbContext;
+		private readonly OSRSDbContext _DbContext;
 
 		public MaterialController(OSRSDbContext dbContext)
 		{
-			DbContext = dbContext;
+			_DbContext = dbContext;
 		}
 		public async Task<IActionResult> Index()
 		{
-			var materials = await DbContext.Materials.ToListAsync();
+			var materials = await _DbContext.Materials.ToListAsync();
 			return View(materials);
 		}
 	}

@@ -7,17 +7,17 @@ namespace OSRSHelper.Controllers
 {
 	public class ProductController : Controller
 	{
-		private readonly OSRSDbContext DbContext;
+		private readonly OSRSDbContext _DbContext;
 
 		public ProductController(OSRSDbContext dbContext)
 		{
-			DbContext = dbContext;
+			_DbContext = dbContext;
 		}
-		public async Task<IActionResult> Index(int MaterialId)
+		public async Task<IActionResult> Index(int id)
 		{
-            var products = await DbContext.Products.ToListAsync();
+            var products = await _DbContext.Products.ToListAsync();
 
-			if (MaterialId != 0)
+			if (id != 0)
 			{
 				//products = products.Where(p => p.MaterialId == MaterialId).ToList();
 
