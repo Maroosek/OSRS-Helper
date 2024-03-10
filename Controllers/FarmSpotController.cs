@@ -18,31 +18,25 @@ namespace OSRSHelper.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var farmSpots = await _DbContext.FarmSpots.ToListAsync();
-			//Not sure about that structure
-			//var farmSpots = await DbContext.Products.Include(p => p.FarmType).ToListAsync();
-			return View(farmSpots);
+
+            //ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");
+
+            //Not sure about that structure
+            //var farmSpots = await DbContext.Products.Include(p => p.FarmType).ToListAsync();
+            return View(farmSpots);
 		}
 
 		public IActionResult Create()
 		{
 			//Need this to show the dropdown list properly
-			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmTypeId");
+			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");
 
 			return View();
 		}
 
 		[HttpPost]
 		public async Task<IActionResult> Create(FarmSpot farmSpot)
-        //[Bind("FarmSpotId, SpotName, Time, FarmTypeId")]
         {
-            //This is bad structure
-            /*var farmSpot = new FarmSpot
-			{
-				SpotName = model.SpotName,
-				Time = model.Time,
-				FarmType = model.FarmType
-			};*/
-
             if (!ModelState.IsValid) //expand this
 			{
                 await _DbContext.FarmSpots.AddAsync(farmSpot);
@@ -51,19 +45,20 @@ namespace OSRSHelper.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmTypeId", farmSpot.FarmTypeId);
+			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");//, farmSpot.FarmTypeId);
 
 			return View(farmSpot);
         }
 
-		public IActionResult Edit(int? id)
+		public async Task<IActionResult> Edit(int? id)
 		{
-			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmTypeId");
+			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");// needed for the dropdown list
+			
 			if (id == null || id == 0)
 			{
 				return NotFound();
 			}
-			FarmSpot farmSpot = _DbContext.FarmSpots.Find(id);
+			FarmSpot farmSpot = await _DbContext.FarmSpots.FindAsync(id);
 			if (farmSpot == null)
 			{
 				return NotFound();
@@ -75,18 +70,28 @@ namespace OSRSHelper.Controllers
 		public async Task<IActionResult> Edit(FarmSpot farmSpot)
 		{
 
-			if (!ModelState.IsValid) //expand this
-			{
-				await _DbContext.FarmSpots.AddAsync(farmSpot);
-				await _DbContext.SaveChangesAsync();
+            if (!ModelState.IsValid) //add model validation
+            {
 
-				return RedirectToAction("Index");
-			}
+                var farmSpotInDb = await _DbContext.FarmSpots.FindAsync(farmSpot.FarmSpotId);
 
-			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmTypeId", farmSpot.FarmTypeId);
+                if (farmSpotInDb == null)
+                {
+                    return NotFound();
+                }
 
-			return View(farmSpot);
-		}
+                farmSpotInDb.SpotName = farmSpot.SpotName;
+                farmSpotInDb.Time = farmSpot.Time;
+                farmSpotInDb.FarmTypeId = farmSpot.FarmTypeId;
+
+                _DbContext.FarmSpots.Update(farmSpotInDb);
+                _DbContext.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+
+            return View(farmSpot);
+        }
 
 		public async Task<IActionResult> Delete(int? id)
 		{

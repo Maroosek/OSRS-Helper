@@ -1,5 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using OSRSHelper.Models
+@model OSRSHelper.Models.FarmSpot
+
+<h1>Edit Farm Spot</h1>
+
+<form method="post">
+
+    <input type="hidden" asp-for="FarmSpotId"/> <!-- Without this edit wont work -->
+
+    <div class="edit">
+        <div class="form-group">
+            <label class="form-label">Name</label>
+            <input class="form-control" type="text" asp-for="SpotName" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Time</label>
+            <input class="form-control" type="number" asp-for="Time" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Farm Type</label>
+            <select asp-for="FarmTypeId" class="form-control" asp-items="ViewBag.FarmTypeId">
+                <option value="">Select</option> <!-- To be nullable value="" -->
+            </select>
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Edit" class="btn btn-primary" />
+        </div>
+    </div>
+</form>

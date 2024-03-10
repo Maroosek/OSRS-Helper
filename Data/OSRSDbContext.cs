@@ -13,5 +13,9 @@ namespace OSRSHelper.Data
         public DbSet<Material> Materials { get; set; }
         public DbSet<Product> Products { get; set; }
 
+        internal async Task SaveChangesAsync(FarmSpot farmSpotInDb)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
