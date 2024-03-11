@@ -31,5 +31,10 @@ namespace OSRSHelper.Controllers
             
             return View(products);
 		}
+		public async Task<IActionResult> Details()
+		{
+			return View();
+		}
+		
 	}
 }

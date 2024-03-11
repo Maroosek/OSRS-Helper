@@ -92,8 +92,8 @@ namespace OSRSHelper.Controllers
 
             return View(farmSpot);
         }
-
-		public async Task<IActionResult> Delete(int? id)
+        //TODO fix delete
+        public async Task<IActionResult> Delete(int? id)
 		{
             
 			if (id == null)
@@ -111,37 +111,5 @@ namespace OSRSHelper.Controllers
 
 			return RedirectToAction("Index");
         }
-        //TODO fix delete, this structure should be used
-        /*public async Task<IActionResult> Delete(int? id)
-        {
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var farmSpot = await DbContext.FarmSpots.
-                Include(f => f.FarmType).
-                FirstOrDefaultAsync(f => f.FarmSpotId == id);
-
-            if (farmSpot == null)
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction("Index");
-        }
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var farmSpot = await DbContext.FarmSpots.FindAsync(id);
-            if (farmSpot != null)
-            {
-                DbContext.FarmSpots.Remove(farmSpot);
-            }
-            await DbContext.SaveChangesAsync();
-
-            return RedirectToAction("Index");
-        }*/
     }
 }
