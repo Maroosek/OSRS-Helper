@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OSRSHelper.Data;
 using OSRSHelper.Models;
@@ -16,12 +17,21 @@ namespace OSRSHelper.Controllers
 		public async Task<IActionResult> Index(int id)
 		{
             var products = await _DbContext.Products.ToListAsync();
+			
+			//ViewData["MaterialId"] = new SelectList(_DbContext.Materials, "MaterialId", "Material");
 
-			if (id != 0)
+
+            if (id != 0)
 			{
-				//products = products.Where(p => p.MaterialId == MaterialId).ToList();
 
-				return View();
+                var materials = products.Where(p => p.MaterialSecondId == id || p.MaterialId == id).ToList();
+                //anonymous type to implement later
+				/*var materials = products
+				.Where(p => p.MaterialSecondId == id || p.MaterialId == id)
+				.Select(p => new { Id = p.MaterialId == id ? p.MaterialId : p.MaterialSecondId, Product = p })
+				.ToList();*/
+
+                return View(materials);
 			}
 
             /*if (!string.IsNullOrEmpty(MaterialName))
