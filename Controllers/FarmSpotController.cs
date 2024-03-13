@@ -18,12 +18,23 @@ namespace OSRSHelper.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var farmSpots = await _DbContext.FarmSpots.ToListAsync();
+			var farmTypes = await _DbContext.FarmTypes.ToListAsync();
+			//Doesnt work
+			/*var joined = (from fs in farmSpots
+							join ft in farmTypes on fs.FarmTypeId equals ft.FarmTypeId
+							select new { fs, ft }).ToList();*/
+			//Doesnt work
+			//var joined = farmSpots.Join(farmTypes, fs => fs.FarmTypeId, ft => ft.FarmTypeId, (fs, ft) => new { fs, ft }).ToList();
+			//Works, returns anonymous type, view needs to refer to FarmType as object, then use FarmName
+			var joined = farmSpots.
+				Join(farmTypes, fs => fs.FarmTypeId, ft => ft.FarmTypeId, (fs, ft) => new FarmSpot 
+				{ FarmSpotId = fs.FarmSpotId, SpotName = fs.SpotName, Time = fs.Time, FarmTypeId = fs.FarmTypeId, FarmType = ft }).ToList();
 
             //ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");
 
             //Not sure about that structure
-            //var farmSpots = await DbContext.Products.Include(p => p.FarmType).ToListAsync();
-            return View(farmSpots);
+            //var farmSpots = await _DbContext.Products.Include(p => p.FarmType).ToListAsync();
+            return View(joined);
 		}
 
 		public IActionResult Create()

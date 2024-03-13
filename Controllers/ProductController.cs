@@ -17,21 +17,39 @@ namespace OSRSHelper.Controllers
 		public async Task<IActionResult> Index(int id)
 		{
             var products = await _DbContext.Products.ToListAsync();
-			
-			//ViewData["MaterialId"] = new SelectList(_DbContext.Materials, "MaterialId", "Material");
+            var farmTypes = await _DbContext.FarmTypes.ToListAsync();
+            var materials = await _DbContext.Materials.ToListAsync();
+
+            //ViewData["MaterialId"] = new SelectList(_DbContext.Materials, "MaterialId", "Material");
 
 
             if (id != 0)
 			{
 
-                var materials = products.Where(p => p.MaterialSecondId == id || p.MaterialId == id).ToList();
+                var productsFiltered = products.Where(p => p.MaterialSecondId == id || p.MaterialId == id).ToList();
+				//var joined = productsFiltered.Join(materials, p => p.MaterialId, m => m.MaterialId, (p, m) => new { p, m }).ToList();
+
+				/*var joined = from p in productsFiltered
+							 join m in materials on p.MaterialId equals m.MaterialId
+							 join m2 in materials on p.MaterialSecondId equals m2.MaterialId
+							 select new
+							 {
+								*//* p.FarmTypeId,
+								 p.MaterialId,
+								 p.MaterialSecondId,
+								 p.ProductId,
+								 p.ProductName*//*
+
+							 };*/
+				//joined.ToList();
+
                 //anonymous type to implement later
-				/*var materials = products
+                /*var materials = products
 				.Where(p => p.MaterialSecondId == id || p.MaterialId == id)
 				.Select(p => new { Id = p.MaterialId == id ? p.MaterialId : p.MaterialSecondId, Product = p })
 				.ToList();*/
 
-                return View(materials);
+                return View(productsFiltered);
 			}
 
             /*if (!string.IsNullOrEmpty(MaterialName))

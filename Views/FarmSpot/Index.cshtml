@@ -35,7 +35,7 @@
 				@Html.DisplayFor(modelItem => item.Time)
 			</td>
 			<td>
-				@Html.DisplayFor(modelItem => item.FarmTypeId)
+				@Html.DisplayFor(modelItem => item.FarmType.FarmName)
 			</td>
 			<td>
 				<a asp-action="Edit" asp-route-id="@item.FarmSpotId">Edit</a> |

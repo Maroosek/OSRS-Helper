@@ -45,13 +45,13 @@
 					@Html.DisplayFor(modelItem => item.ProductExperience)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.FarmTypeId)
+					@Html.DisplayFor(modelItem => item.FarmType.FarmName)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.MaterialId)
+					@Html.DisplayFor(modelItem => item.Material.MaterialName)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.MaterialSecondId)
+					@Html.DisplayFor(modelItem => item.MaterialSecond.MaterialName)
 				</td>
 
 			</tr>
