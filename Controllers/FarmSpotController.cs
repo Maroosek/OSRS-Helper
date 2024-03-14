@@ -18,6 +18,7 @@ namespace OSRSHelper.Controllers
 		public async Task<IActionResult> Index()
 		{
 			var farmSpots = await _DbContext.FarmSpots.ToListAsync();
+			//farmTypes changes ids to actual names
 			var farmTypes = await _DbContext.FarmTypes.ToListAsync();
 			//Doesnt work
 			/*var joined = (from fs in farmSpots
@@ -26,15 +27,15 @@ namespace OSRSHelper.Controllers
 			//Doesnt work
 			//var joined = farmSpots.Join(farmTypes, fs => fs.FarmTypeId, ft => ft.FarmTypeId, (fs, ft) => new { fs, ft }).ToList();
 			//Works, returns anonymous type, view needs to refer to FarmType as object, then use FarmName
-			var joined = farmSpots.
+			/*var joined = farmSpots.
 				Join(farmTypes, fs => fs.FarmTypeId, ft => ft.FarmTypeId, (fs, ft) => new FarmSpot 
-				{ FarmSpotId = fs.FarmSpotId, SpotName = fs.SpotName, Time = fs.Time, FarmTypeId = fs.FarmTypeId, FarmType = ft }).ToList();
+				{ FarmSpotId = fs.FarmSpotId, SpotName = fs.SpotName, Time = fs.Time, FarmTypeId = fs.FarmTypeId, FarmType = ft }).ToList();*/
 
             //ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");
 
             //Not sure about that structure
             //var farmSpots = await _DbContext.Products.Include(p => p.FarmType).ToListAsync();
-            return View(joined);
+            return View(farmSpots);
 		}
 
 		public IActionResult Create()
@@ -104,7 +105,7 @@ namespace OSRSHelper.Controllers
             return View(farmSpot);
         }
         //TODO fix delete
-        public async Task<IActionResult> Delete(int? id)
+        /*public async Task<IActionResult> Delete(int? id)
 		{
             
 			if (id == null)
@@ -121,6 +122,38 @@ namespace OSRSHelper.Controllers
             }
 
 			return RedirectToAction("Index");
+        }*/
+        public async Task<IActionResult> Delete(int? id)
+        {
+            ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");// needed for the dropdown list
+
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            FarmSpot farmSpot = await _DbContext.FarmSpots.FindAsync(id);
+            if (farmSpot == null)
+            {
+                return NotFound();
+            }
+            return View(farmSpot);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteSpot(int? id)
+        {
+            FarmSpot farmSpot = await _DbContext.FarmSpots.FindAsync(id);
+
+            if (farmSpot == null)
+            {
+                return NotFound();
+            }
+
+            _DbContext.FarmSpots.Remove(farmSpot);
+            await _DbContext.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+
         }
     }
 }

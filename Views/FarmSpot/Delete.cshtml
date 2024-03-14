@@ -1,23 +1,30 @@
 ﻿@using OSRSHelper.Models
 @model OSRSHelper.Models.FarmSpot
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
 
-<h1>Delete Farm Spot</h1>
+<h1>Edit Farm Spot</h1>
 
-    <div class="delete">
-        <label class="form-label">Name</label>
-        <input disabled class="form-control" type="text" asp-for="SpotName" />
-        <label class="form-label">Time</label>
-        <input disabled class="form-control" type="number" asp-for="Time" />
-        <label class="form-label">Farm Type</label>
-        <input disabled class="form-control" type="text" asp-for="FarmType" />
+<form method="post">
+
+    <input type="hidden" asp-for="FarmSpotId" /> <!-- Without this edit wont work -->
+
+    <div class="edit">
+        <div class="form-group">
+            <label class="form-label">Name</label>
+            <input disabled class="form-control" type="text" asp-for="SpotName" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Time</label>
+            <input disabled class="form-control" type="number" asp-for="Time" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Farm Type</label>
+            <select asp-for="FarmTypeId" disabled class="form-control" asp-items="ViewBag.FarmTypeId">
+                <option value="">Select</option> <!-- To be nullable value="" -->
+            </select>
+        </div>
         <br />
-        
+        <div class="form-group">
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </div>
     </div>
-<form method="post" asp-controller="FarmSpot" asp-action="Delete">
-    <button type="button" class="btn btn-danger form-control">Delete</button>
 </form>
