@@ -59,9 +59,30 @@ namespace OSRSHelper.Controllers
             
             return View(products);
 		}
-		public async Task<IActionResult> Details()
+		public async Task<IActionResult> Details(int? id)
 		{
-			return View();
+            //var products = await _DbContext.Products.ToListAsync();
+            var farmTypes = await _DbContext.FarmTypes.ToListAsync();
+            var materials = await _DbContext.Materials.ToListAsync();
+            FarmSpot products = await _DbContext.FarmSpots.FindAsync(id);
+
+/*			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");
+			ViewData["MaterialId"] = new SelectList(_DbContext.FarmTypes, "MaterialId", "MaterialName");*/
+
+            /*var joined = from p in products
+						 join ft in farmTypes on p.FarmTypeId equals ft.FarmTypeId
+                         join m in materials on p.MaterialId equals m.MaterialId
+						 join m2 in materials on p.MaterialSecondId equals m2.MaterialId
+						 select new
+						 {
+							 p.ProductId,
+							 p.ProductName,
+                             p.FarmTypeId,
+                             p.MaterialId,
+                             p.MaterialSecondId
+                         };*/
+
+            return View(products);
 		}
 		
 	}
