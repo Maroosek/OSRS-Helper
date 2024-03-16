@@ -61,10 +61,17 @@ namespace OSRSHelper.Controllers
 		}
 		public async Task<IActionResult> Details(int? id)
 		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+            ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");// needed for the dropdown list
+
             //var products = await _DbContext.Products.ToListAsync();
             var farmTypes = await _DbContext.FarmTypes.ToListAsync();
             var materials = await _DbContext.Materials.ToListAsync();
-            FarmSpot products = await _DbContext.FarmSpots.FindAsync(id);
+			var farmspot = await _DbContext.FarmSpots.ToListAsync();
+            Product products = await _DbContext.Products.FindAsync(id);
 
 /*			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");
 			ViewData["MaterialId"] = new SelectList(_DbContext.FarmTypes, "MaterialId", "MaterialName");*/
