@@ -75,7 +75,8 @@ namespace OSRSHelper.Controllers
 
 /*			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");
 			ViewData["MaterialId"] = new SelectList(_DbContext.FarmTypes, "MaterialId", "MaterialName");*/
-
+			/*var spots = from fs in farmspot
+						select new { fs.FarmSpotId, fs.SpotName };*/
             /*var joined = from p in products
 						 join ft in farmTypes on p.FarmTypeId equals ft.FarmTypeId
                          join m in materials on p.MaterialId equals m.MaterialId
