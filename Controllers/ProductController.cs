@@ -73,8 +73,8 @@ namespace OSRSHelper.Controllers
 			var farmspot = await _DbContext.FarmSpots.ToListAsync();
             Product products = await _DbContext.Products.FindAsync(id);
 
-			products.ProductValue = (int)(products.ProductValue * 60);
-			products.ProductExperience = (int)(products.ProductExperience * 60);
+			/*products.ProductValue = (int)(products.ProductValue * 60);
+			products.ProductExperience = (int)(products.ProductExperience * 60);*/
 
 /*			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");
 			ViewData["MaterialId"] = new SelectList(_DbContext.FarmTypes, "MaterialId", "MaterialName");*/

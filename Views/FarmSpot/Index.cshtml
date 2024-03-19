@@ -38,8 +38,8 @@
 				@Html.DisplayFor(modelItem => item.FarmType.FarmName)
 			</td>
 			<td>
-				<a asp-action="Edit" asp-route-id="@item.FarmSpotId">Edit</a> |
-				<a asp-action="Delete" asp-route-id="@item.FarmSpotId">Delete</a>
+				<a asp-action="Edit" asp-route-id="@item.FarmSpotId" class="btn btn-primary">Edit</a>
+				<a asp-action="Delete" asp-route-id="@item.FarmSpotId" class="btn btn-danger">Delete</a>
 			</td>
 		</tr>
 		}
