@@ -65,7 +65,9 @@ namespace OSRSHelper.Controllers
 			{
 				return NotFound();
 			}
-            ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");// needed for the dropdown list
+            //ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");// needed for the dropdown list
+            ViewData["ProductId"] = new SelectList(_DbContext.Products, "ProductId", "ProductName");// needed for the dropdown list
+            ViewData["FarmSpotId"] = new SelectList(_DbContext.FarmSpots, "FarmSpotId", "SpotName");
 
             //var products = await _DbContext.Products.ToListAsync();
             var farmTypes = await _DbContext.FarmTypes.ToListAsync();
@@ -95,6 +97,13 @@ namespace OSRSHelper.Controllers
 
             return View(products);
 		}
+
+/*		public async Task<IActionResult> MeasureTime(int? id)
+		{
+			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");
+			ViewData["MaterialId"] = new SelectList(_DbContext.Materials, "MaterialId", "MaterialName");
+			return View();
+		}*/
 		
 	}
 }
