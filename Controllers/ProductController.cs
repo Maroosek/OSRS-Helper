@@ -59,7 +59,7 @@ namespace OSRSHelper.Controllers
             
             return View(products);
 		}
-		public async Task<IActionResult> Details(int? id)
+		public async Task<IActionResult> Details(int? id, int? farmTypeId, int? secondProductId)//int for spot, int for other product
 		{
 			if (id == null)
 			{
@@ -72,9 +72,27 @@ namespace OSRSHelper.Controllers
             //var products = await _DbContext.Products.ToListAsync();
             var farmTypes = await _DbContext.FarmTypes.ToListAsync();
             var materials = await _DbContext.Materials.ToListAsync();
-			var farmspot = await _DbContext.FarmSpots.ToListAsync();
+			//var farmspot = await _DbContext.FarmSpots.ToListAsync();
             Product products = await _DbContext.Products.FindAsync(id);
-
+			
+			if (secondProductId != null)
+			{
+                Product secondProduct = await _DbContext.Products.FindAsync(secondProductId);
+                
+				if (farmTypeId != 0)
+                {
+                    FarmType selectedFarm = await _DbContext.FarmTypes.FindAsync(farmTypeId);
+                    products.ProductValue = (int)(products.ProductValue * 60);
+                    products.ProductExperience = (int)(products.ProductExperience * 60);
+                    
+					return View(products); // change to dynamic
+                }
+                products.ProductValue = (int)(products.ProductValue * 60);
+                products.ProductExperience = (int)(products.ProductExperience * 60);
+                
+				return View(products);
+            }
+			
 			/*products.ProductValue = (int)(products.ProductValue * 60);
 			products.ProductExperience = (int)(products.ProductExperience * 60);*/
 
@@ -95,7 +113,7 @@ namespace OSRSHelper.Controllers
                              p.MaterialSecondId
                          };*/
 
-            return View(products);
+            return View(products);// return dynamic with two products
 		}
 
 /*		public async Task<IActionResult> MeasureTime(int? id)

@@ -64,16 +64,36 @@
 
 @* @Html.DropDownListFor(model => model.FarmTypeId, (IEnumerable<SelectListItem>)ViewBag.FarmTypeId, "Select", new { @class = "form-control" }) *@
 
-<div class="form-group">
-    <label class="form-label">Spot name</label>
-    <select asp-for="FarmTypeId" class="form-control" asp-items="ViewBag.FarmSpotId">
-        <option value="">Select</option> <!-- To be nullable value="" -->
-    </select>
-</div>
 
-<div class="form-group">
-    <label class="form-label">Compare product</label>
-    <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId">
-        <option value="">Select</option> <!-- To be nullable value="" -->
-    </select>
-</div>
+
+<form method="get">
+
+    <input type="hidden" asp-for="ProductId" /> <!-- Without this edit wont work -->
+
+    <div class="details">
+@*         <div class="form-group">
+            <label class="form-label">Name</label>
+            <input class="form-control" type="text" asp-for="SpotName" />
+        </div>
+        <div class="form-group">
+            <label class="form-label">Time</label>
+            <input class="form-control" type="number" asp-for="Time" />
+        </div> *@
+        <div class="form-group">
+            <label class="form-label">Spot name</label>
+            <select asp-for="FarmTypeId" class="form-control" asp-items="ViewBag.FarmSpotId">
+                <option value="">Select</option> <!-- To be nullable value="" -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Compare product</label>
+            <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId">
+                <option value="">Select</option> <!-- To be nullable value="" -->
+            </select>
+        </div>
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Compare" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
