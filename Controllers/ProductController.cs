@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OSRSHelper.Data;
 using OSRSHelper.Models;
+using System.Dynamic;
 
 namespace OSRSHelper.Controllers
 {
@@ -59,7 +60,7 @@ namespace OSRSHelper.Controllers
             
             return View(products);
 		}
-		public async Task<IActionResult> Details(int? id, int? farmTypeId, int? secondProductId)//int for spot, int for other product
+		public async Task<IActionResult> Details(int? id, int? farmTypeId, int? productId)
 		{
 			if (id == null)
 			{
@@ -69,21 +70,28 @@ namespace OSRSHelper.Controllers
             ViewData["ProductId"] = new SelectList(_DbContext.Products, "ProductId", "ProductName");// needed for the dropdown list
             ViewData["FarmSpotId"] = new SelectList(_DbContext.FarmSpots, "FarmSpotId", "SpotName");
 
+			
             //var products = await _DbContext.Products.ToListAsync();
             var farmTypes = await _DbContext.FarmTypes.ToListAsync();
             var materials = await _DbContext.Materials.ToListAsync();
 			//var farmspot = await _DbContext.FarmSpots.ToListAsync();
             Product products = await _DbContext.Products.FindAsync(id);
+			//dynamic combined = new ExpandoObject();
+			//combined.Product = products;
 			
-			if (secondProductId != null)
+			if (productId != null)
 			{
-                Product secondProduct = await _DbContext.Products.FindAsync(secondProductId);
+                //ViewData["SecondProduct"] = await _DbContext.Products.FindAsync(productId);
+                Product secondProduct = await _DbContext.Products.FindAsync(productId);
+				//combined.SecondProduct = secondProduct;
                 
-				if (farmTypeId != 0)
+				if (farmTypeId != null)
                 {
+                    //ViewData["SelectedFarm"] = await _DbContext.FarmTypes.FindAsync(farmTypeId);
                     FarmType selectedFarm = await _DbContext.FarmTypes.FindAsync(farmTypeId);
-                    products.ProductValue = (int)(products.ProductValue * 60);
-                    products.ProductExperience = (int)(products.ProductExperience * 60);
+                    products.ProductValue = (int)(products.ProductValue * 30);
+                    products.ProductExperience = (int)(products.ProductExperience * 30);
+					//combined.FarmType = selectedFarm;
                     
 					return View(products); // change to dynamic
                 }
