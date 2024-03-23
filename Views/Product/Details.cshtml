@@ -1,57 +1,76 @@
 ﻿@using OSRSHelper.Models
-@model OSRSHelper.Models.ViewModels.ProductViewModel
+@model OSRSHelper.Models.ViewModels.MultipleProducts
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 <h1>Details</h1>
-
+@* TODO fix how secodn product is displayed *@
 <div>
     <h4>Product</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Products.ProductName)
+            @Html.DisplayNameFor(model => model.Product.ProductName)
         </dt>
         <dd class="col-sm-10">
-            @* @Html.DisplayFor(model => model.Products.ProductName) *@
+            @Html.DisplayFor(model => model.Product.ProductName)
             @Html.DisplayFor(model => model.ProductSecond.ProductName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Products.ProductValue)
+            @Html.DisplayNameFor(model => model.Product.ProductValue)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Products.ProductValue)
+            @Html.DisplayFor(model => model.Product.ProductValue)
             @Html.DisplayFor(model => model.ProductSecond.ProductValue)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Products.ProductExperience)
+            @Html.DisplayNameFor(model => model.Product.ProductExperience)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Products.ProductExperience)
+            @Html.DisplayFor(model => model.Product.ProductExperience)
             @Html.DisplayFor(model => model.ProductSecond.ProductExperience)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Products.FarmType)
+            @Html.DisplayNameFor(model => model.Product.FarmType)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Products.FarmType.FarmName)
+            @Html.DisplayFor(model => model.Product.FarmType.FarmName)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Products.Material)
+            @Html.DisplayNameFor(model => model.Product.Material)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Products.Material.MaterialName)
-            @Html.DisplayFor(model => model.Products.Material.MaterialValue)
+            @Html.DisplayFor(model => model.Product.Material.MaterialName)
+            @Html.DisplayFor(model => model.Product.Material.MaterialValue)
+            @Html.DisplayFor(model => model.ProductSecond.Material.MaterialName)
+            @Html.DisplayFor(model => model.ProductSecond.Material.MaterialValue)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Products.MaterialSecond)
+            @Html.DisplayNameFor(model => model.Product.MaterialSecond)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Products.MaterialSecond.MaterialName)
-            @Html.DisplayFor(model => model.Products.MaterialSecond.MaterialValue)
+            @Html.DisplayFor(model => model.Product.MaterialSecond.MaterialName)
+            @Html.DisplayFor(model => model.Product.MaterialSecond.MaterialValue)
+            @Html.DisplayFor(model => model.ProductSecond.MaterialSecond.MaterialName)
+            @Html.DisplayFor(model => model.ProductSecond.MaterialSecond.MaterialValue)
         </dd>
+        @if (Model.farmSpot != null)
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.farmSpot.SpotName)
+            </dt>
+            <dd class="col-sm-18">
+				@Html.DisplayFor(model => model.farmSpot.SpotName)
+            </dd>
+            <dt class="col-sm-2">
+				@Html.DisplayNameFor(model => model.farmSpot.Time)
+            </dt>
+			<dd class="col-sm-18">
+                @Html.DisplayFor(model => model.farmSpot.Time)
+			</dd>
+        }
     </dl>
 </div>
 
@@ -59,18 +78,18 @@
 
 <form method="get">
 
-    <input type="hidden" asp-for="Products.ProductId" /> <!-- Without this edit wont work -->
+    @* <input type="hidden" asp-for="Products.ProductId" /> <!-- Without this edit wont work --> *@
 
     <div class="details">
         <div class="form-group">
-            <label class="form-label">Spot name</label>
-            <select asp-for="Products.FarmTypeId" class="form-control" asp-items="ViewBag.FarmSpotId">
+            <label class="form-label">Compare product</label>
+            <select asp-for="ProductId" class="form-control" asp-items="ViewBag.ProductId">
                 <option value="">Select</option> <!-- To be nullable value="" -->
             </select>
         </div>
         <div class="form-group">
-            <label class="form-label">Compare product</label>
-            <select asp-for="Products.ProductId" class="form-control" asp-items="ViewBag.ProductId">
+            <label class="form-label">Spot name</label>
+            <select asp-for="FarmTypeId" class="form-control" asp-items="ViewBag.FarmSpotId">
                 <option value="">Select</option> <!-- To be nullable value="" -->
             </select>
         </div>

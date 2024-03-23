@@ -61,7 +61,7 @@ namespace OSRSHelper.Controllers
             
             return View(products);
 		}
-		public async Task<IActionResult> Details(int? id, int? farmTypeId, int? productId)
+		public async Task<IActionResult> Details(int? id, int? productId, int? farmTypeId)
 		{
 			if (id == null)
 			{
@@ -81,33 +81,31 @@ namespace OSRSHelper.Controllers
 			//dynamic combined = new ExpandoObject();
 			//combined.Product = products;
 
-			ProductViewModel productViewModel = new ProductViewModel();
-            productViewModel.Products = products;
-            Product secondProduct = await _DbContext.Products.FindAsync(productId);
-            productViewModel.ProductSecond = secondProduct;
-
-            if (productViewModel.ProductSecond != null)
+			MultipleProducts CombinedProducts = new MultipleProducts();
+            CombinedProducts.Product = products;
+			
+			if (productId != null)
 			{
                 //ViewData["SecondProduct"] = await _DbContext.Products.FindAsync(productId);
-/*                Product secondProduct = await _DbContext.Products.FindAsync(productId);
-				productViewModel.ProductSecond = secondProduct;*/
+                Product secondProduct = await _DbContext.Products.FindAsync(productId);
+				CombinedProducts.ProductSecond = secondProduct;
 				//combined.SecondProduct = secondProduct;
                 
 				if (farmTypeId != null)
                 {
                     //ViewData["SelectedFarm"] = await _DbContext.FarmTypes.FindAsync(farmTypeId);
-                    FarmType selectedFarm = await _DbContext.FarmTypes.FindAsync(farmTypeId);
-					productViewModel.FarmTypes = selectedFarm;
-                    productViewModel.Products.ProductValue = (productViewModel.Products.ProductValue * 30);
-                    productViewModel.ProductSecond.ProductExperience = (productViewModel.Products.ProductExperience * 30);
-					//combined.FarmType = selectedFarm;
-                    
-					return View(productViewModel); // change to dynamic
+                    FarmSpot selectedFarm = await _DbContext.FarmSpots.FindAsync(farmTypeId);
+					CombinedProducts.farmSpot = selectedFarm;
+                    CombinedProducts.Product.ProductValue = (CombinedProducts.Product.ProductValue * CombinedProducts.farmSpot.Time);
+                    CombinedProducts.Product.ProductExperience = (CombinedProducts.Product.ProductExperience * CombinedProducts.farmSpot.Time);
+                    CombinedProducts.ProductSecond.ProductValue = (CombinedProducts.ProductSecond.ProductValue * CombinedProducts.farmSpot.Time);
+                    CombinedProducts.ProductSecond.ProductExperience = (CombinedProducts.ProductSecond.ProductExperience * CombinedProducts.farmSpot.Time);
+                    //combined.FarmType = selectedFarm;
+
+                    return View(CombinedProducts); // change to dynamic
                 }
-                productViewModel.Products.ProductValue = (productViewModel.Products.ProductValue * 60);
-                productViewModel.Products.ProductExperience = (productViewModel.Products.ProductExperience * 60);
-                
-				return View(productViewModel);
+				
+				return View(CombinedProducts);
             }
 			
 			/*products.ProductValue = (int)(products.ProductValue * 60);
@@ -130,7 +128,7 @@ namespace OSRSHelper.Controllers
                              p.MaterialSecondId
                          };*/
 
-            return View(productViewModel);// return dynamic with two products
+            return View(CombinedProducts);// return dynamic with two products
 		}
 
 /*		public async Task<IActionResult> MeasureTime(int? id)

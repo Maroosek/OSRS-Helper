@@ -1,4 +1,6 @@
 ﻿
+using OSRSHelper.Models.ViewModels;
+
 namespace OSRSHelper.Models
 {
 	public class Product
@@ -13,10 +15,5 @@ namespace OSRSHelper.Models
 		public int MaterialId { get; set; }
 		public Material? MaterialSecond { get; set; }
 		public int? MaterialSecondId { get; set; }
-
-        public static implicit operator List<object>(Product? v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
