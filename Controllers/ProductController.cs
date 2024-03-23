@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OSRSHelper.Data;
 using OSRSHelper.Models;
+using OSRSHelper.Models.ViewModels;
 using System.Dynamic;
 
 namespace OSRSHelper.Controllers
@@ -67,10 +68,11 @@ namespace OSRSHelper.Controllers
 				return NotFound();
 			}
             //ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");// needed for the dropdown list
-            ViewData["ProductId"] = new SelectList(_DbContext.Products, "ProductId", "ProductName");// needed for the dropdown list
-            ViewData["FarmSpotId"] = new SelectList(_DbContext.FarmSpots, "FarmSpotId", "SpotName");
 
-			
+            ViewData["ProductId"] = new SelectList(_DbContext.Products, "ProductId", "ProductName");// needed for the dropdown list
+            ViewData["FarmSpotId"] = new SelectList(_DbContext.FarmSpots, "FarmSpotId", "SpotName");// needed for the dropdown list
+
+
             //var products = await _DbContext.Products.ToListAsync();
             var farmTypes = await _DbContext.FarmTypes.ToListAsync();
             var materials = await _DbContext.Materials.ToListAsync();
@@ -78,27 +80,34 @@ namespace OSRSHelper.Controllers
             Product products = await _DbContext.Products.FindAsync(id);
 			//dynamic combined = new ExpandoObject();
 			//combined.Product = products;
-			
-			if (productId != null)
+
+			ProductViewModel productViewModel = new ProductViewModel();
+            productViewModel.Products = products;
+            Product secondProduct = await _DbContext.Products.FindAsync(productId);
+            productViewModel.ProductSecond = secondProduct;
+
+            if (productViewModel.ProductSecond != null)
 			{
                 //ViewData["SecondProduct"] = await _DbContext.Products.FindAsync(productId);
-                Product secondProduct = await _DbContext.Products.FindAsync(productId);
+/*                Product secondProduct = await _DbContext.Products.FindAsync(productId);
+				productViewModel.ProductSecond = secondProduct;*/
 				//combined.SecondProduct = secondProduct;
                 
 				if (farmTypeId != null)
                 {
                     //ViewData["SelectedFarm"] = await _DbContext.FarmTypes.FindAsync(farmTypeId);
                     FarmType selectedFarm = await _DbContext.FarmTypes.FindAsync(farmTypeId);
-                    products.ProductValue = (int)(products.ProductValue * 30);
-                    products.ProductExperience = (int)(products.ProductExperience * 30);
+					productViewModel.FarmTypes = selectedFarm;
+                    productViewModel.Products.ProductValue = (productViewModel.Products.ProductValue * 30);
+                    productViewModel.ProductSecond.ProductExperience = (productViewModel.Products.ProductExperience * 30);
 					//combined.FarmType = selectedFarm;
                     
-					return View(products); // change to dynamic
+					return View(productViewModel); // change to dynamic
                 }
-                products.ProductValue = (int)(products.ProductValue * 60);
-                products.ProductExperience = (int)(products.ProductExperience * 60);
+                productViewModel.Products.ProductValue = (productViewModel.Products.ProductValue * 60);
+                productViewModel.Products.ProductExperience = (productViewModel.Products.ProductExperience * 60);
                 
-				return View(products);
+				return View(productViewModel);
             }
 			
 			/*products.ProductValue = (int)(products.ProductValue * 60);
@@ -121,7 +130,7 @@ namespace OSRSHelper.Controllers
                              p.MaterialSecondId
                          };*/
 
-            return View(products);// return dynamic with two products
+            return View(productViewModel);// return dynamic with two products
 		}
 
 /*		public async Task<IActionResult> MeasureTime(int? id)
