@@ -3,8 +3,6 @@
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
 <h1>Details</h1>
 @* TODO fix how secodn product is displayed *@
 <div>
@@ -16,6 +14,7 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Product.ProductName)
+            <br />
             @Html.DisplayFor(model => model.ProductSecond.ProductName)
         </dd>
         <dt class="col-sm-2">
@@ -23,6 +22,7 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Product.ProductValue)
+            <br />
             @Html.DisplayFor(model => model.ProductSecond.ProductValue)
         </dd>
         <dt class="col-sm-2">
@@ -30,6 +30,7 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Product.ProductExperience)
+            <br />
             @Html.DisplayFor(model => model.ProductSecond.ProductExperience)
         </dd>
         <dt class="col-sm-2">
@@ -44,6 +45,7 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Product.Material.MaterialName)
             @Html.DisplayFor(model => model.Product.Material.MaterialValue)
+            <br />
             @Html.DisplayFor(model => model.ProductSecond.Material.MaterialName)
             @Html.DisplayFor(model => model.ProductSecond.Material.MaterialValue)
         </dd>
@@ -53,6 +55,7 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Product.MaterialSecond.MaterialName)
             @Html.DisplayFor(model => model.Product.MaterialSecond.MaterialValue)
+            <br />
             @Html.DisplayFor(model => model.ProductSecond.MaterialSecond.MaterialName)
             @Html.DisplayFor(model => model.ProductSecond.MaterialSecond.MaterialValue)
         </dd>
@@ -74,12 +77,7 @@
     </dl>
 </div>
 
-@* @Html.DropDownListFor(model => model.FarmTypeId, (IEnumerable<SelectListItem>)ViewBag.FarmTypeId, "Select", new { @class = "form-control" }) *@
-
 <form method="get">
-
-    @* <input type="hidden" asp-for="Products.ProductId" /> <!-- Without this edit wont work --> *@
-
     <div class="details">
         <div class="form-group">
             <label class="form-label">Compare product</label>
