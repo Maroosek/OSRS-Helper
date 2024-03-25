@@ -61,7 +61,7 @@ namespace OSRSHelper.Controllers
             
             return View(products);
 		}
-		public async Task<IActionResult> Details(int? id, int? productId, int? farmTypeId)
+		public async Task<IActionResult> Details(int id, int? productId, int? farmTypeId)
 		{
 			if (id == null)
 			{

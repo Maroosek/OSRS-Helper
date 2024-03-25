@@ -5,6 +5,76 @@
 *@
 <h1>Details</h1>
 @* TODO fix how secodn product is displayed *@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.ProductValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.ProductExperience)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.FarmType.FarmName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.Material.MaterialName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product.MaterialSecond.MaterialName)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Product.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Product.ProductValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Product.ProductExperience)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Product.FarmType.FarmName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Product.Material.MaterialName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.Product.MaterialSecond.MaterialName)
+                </td>
+            </tr>
+        @if (Model.ProductSecond != null)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.ProductSecond.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ProductSecond.ProductValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ProductSecond.ProductExperience)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ProductSecond.FarmType.FarmName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ProductSecond.Material.MaterialName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ProductSecond.MaterialSecond.MaterialName)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 <div>
     <h4>Product</h4>
     <hr />
@@ -59,6 +129,8 @@
             @Html.DisplayFor(model => model.ProductSecond.MaterialSecond.MaterialName)
             @Html.DisplayFor(model => model.ProductSecond.MaterialSecond.MaterialValue)
         </dd>
+        
+        
         @if (Model.farmSpot != null)
         {
             <dt class="col-sm-2">
