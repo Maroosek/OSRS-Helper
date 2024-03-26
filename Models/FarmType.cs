@@ -3,7 +3,7 @@
 	public class FarmType
 	{
         public int FarmTypeId { get; set; }
-		//TODO add actionTime
+		public required int ActionTime { get; set; }
 		public required string FarmName { get; set; }
 	}
 }

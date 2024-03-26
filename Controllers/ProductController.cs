@@ -74,14 +74,17 @@ namespace OSRSHelper.Controllers
 
 
             //var products = await _DbContext.Products.ToListAsync();
-            var farmTypes = await _DbContext.FarmTypes.ToListAsync();
-            var materials = await _DbContext.Materials.ToListAsync();
+
 			//var farmspot = await _DbContext.FarmSpots.ToListAsync();
             Product products = await _DbContext.Products.FindAsync(id);
 			//dynamic combined = new ExpandoObject();
 			//combined.Product = products;
+			int farmType = products.FarmTypeId;
+            var farmTypes = await _DbContext.FarmTypes.FindAsync(farmType);
+			//ViewData["FarmSpotId"] = farmTypes.FarmName; 
+            var materials = await _DbContext.Materials.ToListAsync();
 
-			MultipleProducts CombinedProducts = new MultipleProducts();
+            MultipleProducts CombinedProducts = new MultipleProducts();
             CombinedProducts.Product = products;
 			
 			if (productId != null)

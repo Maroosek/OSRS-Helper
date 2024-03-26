@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OSRSHelper.Data;
 
@@ -11,9 +12,11 @@ using OSRSHelper.Data;
 namespace OSRSHelper.Migrations
 {
     [DbContext(typeof(OSRSDbContext))]
-    partial class OSRSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240326091408_FarmType-Tweak")]
+    partial class FarmTypeTweak
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
