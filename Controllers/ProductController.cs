@@ -31,26 +31,6 @@ namespace OSRSHelper.Controllers
                 var productsFiltered = products.Where(p => p.MaterialSecondId == id || p.MaterialId == id).ToList();
 				//var joined = productsFiltered.Join(materials, p => p.MaterialId, m => m.MaterialId, (p, m) => new { p, m }).ToList();
 
-				/*var joined = from p in productsFiltered
-							 join m in materials on p.MaterialId equals m.MaterialId
-							 join m2 in materials on p.MaterialSecondId equals m2.MaterialId
-							 select new
-							 {
-								*//* p.FarmTypeId,
-								 p.MaterialId,
-								 p.MaterialSecondId,
-								 p.ProductId,
-								 p.ProductName*//*
-
-							 };*/
-				//joined.ToList();
-
-                //anonymous type to implement later
-                /*var materials = products
-				.Where(p => p.MaterialSecondId == id || p.MaterialId == id)
-				.Select(p => new { Id = p.MaterialId == id ? p.MaterialId : p.MaterialSecondId, Product = p })
-				.ToList();*/
-
                 return View(productsFiltered);
 			}
 
@@ -67,18 +47,11 @@ namespace OSRSHelper.Controllers
 			{
 				return NotFound();
 			}
-            //ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");// needed for the dropdown list
 
             ViewData["ProductId"] = new SelectList(_DbContext.Products, "ProductId", "ProductName");// needed for the dropdown list
             ViewData["FarmSpotId"] = new SelectList(_DbContext.FarmSpots, "FarmSpotId", "SpotName");// needed for the dropdown list
 
-
-            //var products = await _DbContext.Products.ToListAsync();
-
-			//var farmspot = await _DbContext.FarmSpots.ToListAsync();
             Product products = await _DbContext.Products.FindAsync(id);
-			//dynamic combined = new ExpandoObject();
-			//combined.Product = products;
 			int farmType = products.FarmTypeId;
             var farmTypes = await _DbContext.FarmTypes.FindAsync(farmType);
 			//ViewData["FarmSpotId"] = farmTypes.FarmName; 
@@ -110,36 +83,8 @@ namespace OSRSHelper.Controllers
 				
 				return View(CombinedProducts);
             }
-			
-			/*products.ProductValue = (int)(products.ProductValue * 60);
-			products.ProductExperience = (int)(products.ProductExperience * 60);*/
-
-/*			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");
-			ViewData["MaterialId"] = new SelectList(_DbContext.FarmTypes, "MaterialId", "MaterialName");*/
-			/*var spots = from fs in farmspot
-						select new { fs.FarmSpotId, fs.SpotName };*/
-            /*var joined = from p in products
-						 join ft in farmTypes on p.FarmTypeId equals ft.FarmTypeId
-                         join m in materials on p.MaterialId equals m.MaterialId
-						 join m2 in materials on p.MaterialSecondId equals m2.MaterialId
-						 select new
-						 {
-							 p.ProductId,
-							 p.ProductName,
-                             p.FarmTypeId,
-                             p.MaterialId,
-                             p.MaterialSecondId
-                         };*/
 
             return View(CombinedProducts);// return dynamic with two products
 		}
-
-/*		public async Task<IActionResult> MeasureTime(int? id)
-		{
-			ViewData["FarmTypeId"] = new SelectList(_DbContext.FarmTypes, "FarmTypeId", "FarmName");
-			ViewData["MaterialId"] = new SelectList(_DbContext.Materials, "MaterialId", "MaterialName");
-			return View();
-		}*/
-		
 	}
 }
