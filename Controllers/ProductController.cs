@@ -5,6 +5,7 @@ using OSRSHelper.Data;
 using OSRSHelper.Models;
 using OSRSHelper.Models.ViewModels;
 using System.Dynamic;
+using System.Linq;
 
 namespace OSRSHelper.Controllers
 {
@@ -47,44 +48,37 @@ namespace OSRSHelper.Controllers
 			{
 				return NotFound();
 			}
-
-            ViewData["ProductId"] = new SelectList(_DbContext.Products, "ProductId", "ProductName");// needed for the dropdown list
-            ViewData["FarmSpotId"] = new SelectList(_DbContext.FarmSpots, "FarmSpotId", "SpotName");// needed for the dropdown list
-
             Product products = await _DbContext.Products.FindAsync(id);
-			int farmType = products.FarmTypeId;
-            var farmTypes = await _DbContext.FarmTypes.FindAsync(farmType);
-			//ViewData["FarmSpotId"] = farmTypes.FarmName; 
+            var farmTypes = await _DbContext.FarmTypes.ToListAsync();
             var materials = await _DbContext.Materials.ToListAsync();
+
+            ViewData["ProductId"] = new SelectList(_DbContext.Products.Where(x => x.FarmTypeId == products.FarmTypeId), "ProductId", "ProductName");// needed for the dropdown list
+            ViewData["FarmSpotId"] = new SelectList(_DbContext.FarmSpots.Where(x => x.FarmTypeId.Value == products.FarmTypeId), "FarmSpotId", "SpotName");//;// needed for the dropdown list
 
             MultipleProducts CombinedProducts = new MultipleProducts();
             CombinedProducts.Product = products;
 			
 			if (productId != null)
 			{
-                //ViewData["SecondProduct"] = await _DbContext.Products.FindAsync(productId);
                 Product secondProduct = await _DbContext.Products.FindAsync(productId);
 				CombinedProducts.ProductSecond = secondProduct;
-				//combined.SecondProduct = secondProduct;
                 
 				if (farmTypeId != null)
                 {
-                    //ViewData["SelectedFarm"] = await _DbContext.FarmTypes.FindAsync(farmTypeId);
                     FarmSpot selectedFarm = await _DbContext.FarmSpots.FindAsync(farmTypeId);
 					CombinedProducts.farmSpot = selectedFarm;
                     CombinedProducts.Product.ProductValue = (CombinedProducts.Product.ProductValue * CombinedProducts.farmSpot.Time);
                     CombinedProducts.Product.ProductExperience = (CombinedProducts.Product.ProductExperience * CombinedProducts.farmSpot.Time);
                     CombinedProducts.ProductSecond.ProductValue = (CombinedProducts.ProductSecond.ProductValue * CombinedProducts.farmSpot.Time);
                     CombinedProducts.ProductSecond.ProductExperience = (CombinedProducts.ProductSecond.ProductExperience * CombinedProducts.farmSpot.Time);
-                    //combined.FarmType = selectedFarm;
 
-                    return View(CombinedProducts); // change to dynamic
+                    return View(CombinedProducts);
                 }
 				
 				return View(CombinedProducts);
             }
 
-            return View(CombinedProducts);// return dynamic with two products
+            return View(CombinedProducts);
 		}
 	}
 }
